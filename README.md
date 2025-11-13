@@ -228,7 +228,7 @@ Each branch in this repository represents a distinct Java learning module, organ
 | **Practice Problems Solved** | 150+ |
 | **Learning Modules** | 8 |
 | **Weeks of Training** | 10 |
-| **GitHub Branches** | 8 |
+| **GitHub Branches** | 8+ |
 
 </div>
 
