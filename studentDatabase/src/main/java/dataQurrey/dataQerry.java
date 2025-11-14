@@ -17,7 +17,7 @@ public class dataQerry implements IDataQuerry{
 	@Override
 	public void CreateTable() throws SQLException {
 			
-		String querry=" CREATE TABLE IF NOT EXISTS studentsData (\r\n"
+		String querry=" CREATE TABLE IF NOT EXISTS studentsdata (\r\n"
 			       + " id INT AUTO_INCREMENT PRIMARY KEY,\r\n"
 			       + " name VARCHAR(100) NOT NULL,\r\n"
 			       + " age INT,\r\n"
@@ -33,21 +33,17 @@ public class dataQerry implements IDataQuerry{
 			
 		Statement stmt=con.createStatement();
 			
-		int a=stmt.executeUpdate(querry);
+		stmt.executeUpdate(querry);
 			
-		if(a==1) {
-			System.out.println("Table Created.");
-		}
-		else {
-			System.out.println("Table already exist.");
-		}	
+		System.out.println("Table Created.\n\n");
+		
 		
 		con.close();
 		}
 	
 	@Override
 	public void DisplayData() throws SQLException{
-		String querry="SELECt * from studentsData;";
+		String querry="SELECt * from studentsdata;";
 		conn.setURL(Config.getURL());
 		conn.setUserName(Config.getUserName());
 		conn.setPassword(Config.getPassword());
@@ -75,16 +71,17 @@ public class dataQerry implements IDataQuerry{
 			
 		Connection con=conn.Connections();
 		
-		System.out.println("Please enter the Name of Student :- ");
+		System.out.print("Please enter the Name of Student :- ");
 		String name=sc.nextLine();
-		System.out.println("Please enter Age of Student :- ");
+		System.out.print("Please enter Age of Student :- ");
 		int age=sc.nextInt();
 		System.out.println("Please enter E-Mail of the student :- ");
+		sc.nextLine();
 		String email=sc.nextLine();
-		System.out.println("Please enter Date of  enrollment (YYYY-MM-DD) :- ");
+		System.out.print("Please enter Date of  enrollment (YYYY-MM-DD) :- ");
 		String date=sc.nextLine();
 		
-		String querry = "INSERT INTO students (name, age, email, enrolled_date) VALUES (?, ?, ?, ?)";
+		String querry = "INSERT INTO studentsdata (name, age, email, enrolled_date) VALUES (?, ?, ?, ?)";
 		PreparedStatement prestmt = con.prepareStatement(querry);
 		
 		prestmt.setString(1, name);
@@ -93,14 +90,14 @@ public class dataQerry implements IDataQuerry{
 		prestmt.setDate(4, Date.valueOf(date));
 		
 		prestmt.executeUpdate();
-		System.out.println("Student added successfully.");
+		System.out.println("Student added successfully.\n\n");
 		
 		con.close();
 	}
 	
 	@Override
 	public void InsertMultipleData() throws SQLException{
-		String querry="INSERT INTO students (name, age, email, enrolled_date) VALUES (?, ?, ?, ?)";
+		String querry="INSERT INTO studentsdata (name, age, email, enrolled_date) VALUES (?, ?, ?, ?)";
 		conn.setURL(Config.getURL());
 		conn.setUserName(Config.getUserName());
 		conn.setPassword(Config.getPassword());
@@ -109,17 +106,19 @@ public class dataQerry implements IDataQuerry{
 		
 		PreparedStatement prestmt = con.prepareStatement(querry);
 		
-		System.out.println("Enter the number of students you want to enter at a time :-");
+		System.out.print("Enter the number of students you want to enter at a time :-");
 		int x=sc.nextInt();
 		
 		for(int i=0;i<x;i++) {
-			System.out.println("Please enter the Name of Student :- ");
+			System.out.print("Please enter the Name of Student :- ");
+			sc.nextLine();
 			String name=sc.nextLine();
-			System.out.println("Please enter Age of Student :- ");
+			System.out.print("Please enter Age of Student :- ");
 			int age=sc.nextInt();
-			System.out.println("Please enter E-Mail of the student :- ");
+			System.out.print("Please enter E-Mail of the student :- ");
+			sc.nextLine();
 			String email=sc.nextLine();
-			System.out.println("Please enter Date of  enrollment (YYYY-MM-DD) :- ");
+			System.out.print("Please enter Date of  enrollment (YYYY-MM-DD) :- ");
 			String date=sc.nextLine();
 			
 			prestmt.setString(1, name);
@@ -131,14 +130,14 @@ public class dataQerry implements IDataQuerry{
 		}
 		
 		prestmt.executeBatch();
-		System.out.println("Multiple Students added successfully.");
+		System.out.println("Multiple Students added successfully.\n\n");
 		
 		con.close();
 	}
 	
 	@Override
 	public void DeleteSingleData() throws SQLException {
-		String querry="DELETE from students WHERE id = ?;";
+		String querry="DELETE from studentsdata WHERE id = ?;";
 		
 		conn.setURL(Config.getURL());
 		conn.setUserName(Config.getUserName());
@@ -148,19 +147,19 @@ public class dataQerry implements IDataQuerry{
 			
 		PreparedStatement prestmt = con.prepareStatement(querry);
 		
-		System.out.println("Enter the ID of student you want to Delete :- ");
+		System.out.print("Enter the ID of student you want to Delete :- ");
 		int id=sc.nextInt();
 		prestmt.setInt(1, id);
 		
 		prestmt.executeUpdate();
-		System.out.println("Student deleted Successfully.");
+		System.out.println("Student deleted Successfully.\n\n");
 		
 		con.close();
 	}
 	
 	@Override
 	public void DeleteMultipleData() throws SQLException{
-		String querry="DELETE from students WHERE id = ?;";
+		String querry="DELETE from studentsdata WHERE id = ?;";
 		conn.setURL(Config.getURL());
 		conn.setUserName(Config.getUserName());
 		conn.setPassword(Config.getPassword());
@@ -168,11 +167,11 @@ public class dataQerry implements IDataQuerry{
 		Connection con=conn.Connections();
 		PreparedStatement prestmt=con.prepareStatement(querry);
 		
-		System.out.println("Enter the number of students you want to Delete :-");
+		System.out.print("Enter the number of students you want to Delete :-");
 		int x=sc.nextInt();
 		
 		for(int i=0;i<x;i++) {
-			System.out.println("Enter the ID of student you want to Delete :- ");
+			System.out.print("Enter the ID of student you want to Delete :- ");
 			int id=sc.nextInt();
 			
 			prestmt.setInt(1, id);
@@ -180,7 +179,7 @@ public class dataQerry implements IDataQuerry{
 			prestmt.addBatch();
 		}
 		prestmt.executeBatch();
-		System.out.println("Multiple students deleted successfully.");
+		System.out.println("Multiple students deleted successfully.\n\n");
 		
 		con.close();
 	}
@@ -188,10 +187,10 @@ public class dataQerry implements IDataQuerry{
 	@Override
 	public void UpdateSingleData() throws SQLException {
 		
-		System.out.println("Enter the ID of student you want to Update :- ");
+		System.out.print("Enter the ID of student you want to Update :- ");
 		int id=sc.nextInt();
 		
-		System.out.println("select :-\n1 to change name.\n2 to change age.\n3 to change email.");
+		System.out.print("select :-\n1 to change name.\n2 to change age.\n3 to change email.");
 		int x=sc.nextInt();
 		
 		conn.setURL(Config.getURL());
@@ -204,50 +203,59 @@ public class dataQerry implements IDataQuerry{
 			
 		Connection con=conn.Connections();
 		
+		querry="UPDATE studentsdata SET ? = ? WHERE id = ?;";
+		PreparedStatement prestmt = con.prepareStatement(querry);
+		
 		if(x==1) {
-			querry="UPDATE students SET name = ? WHERE id = ?;";
+//			querry="UPDATE students SET name = ? WHERE id = ?;";
 			System.out.println("Enter new name :- ");
 			y=sc.nextLine();
 			
-			PreparedStatement prestmt = con.prepareStatement(querry);
+//			PreparedStatement prestmt = con.prepareStatement(querry);
 			
-			prestmt.setString(1, y);
-			prestmt.setInt(2,id);
+			prestmt.setString(1, "name");
+			prestmt.setString(2, y);
+			prestmt.setInt(3,id);
+			
+//			prestmt.addBatch();
+			
+			System.out.println("Student name edited successfully.\n\n");
 		}
 		else if(x==2) {
-			querry="UPDATE students SET age = ? WHERE id = ?;";
+//			querry="UPDATE students SET age = ? WHERE id = ?;";
 			System.out.println("Enter new age :- ");
 			age=sc.nextInt();
 			
-			PreparedStatement prestmt = con.prepareStatement(querry);
+//			PreparedStatement prestmt = con.prepareStatement(querry);
 			
-			prestmt.setInt(1, age);
-			prestmt.setInt(2, id);
+			prestmt.setString(1, "age");
+			prestmt.setInt(2, age);
+			prestmt.setInt(3, id);
+			
+//			prestmt.addBatch();
+			
+			System.out.println("Student age edited successfully.\n\n");
 		}
 		else if(x==3) {
-			querry="UPDATE students SET email = ? WHERE id = ?;";
+//			querry="UPDATE students SET email = ? WHERE id = ?;";
 			System.out.println("Enter new E-Mail :- ");
 			y=sc.nextLine();
 			
-			PreparedStatement prestmt = con.prepareStatement(querry);
+//			PreparedStatement prestmt = con.prepareStatement(querry);
 			
-			prestmt.setString(1, y);
-			prestmt.setInt(2,id);
+			prestmt.setString(1, "email");
+			prestmt.setString(2, y);
+			prestmt.setInt(3,id);
+			
+//			prestmt.addBatch();
+			
+			System.out.println("Student E-Mail edited successfully.\n\n");
 		}
 		else {
 			System.out.println("Invalid Input.");
 		}
 		
-//		PreparedStatement prestmt = con.prepareStatement(querry);
-//		
-//		if(x==1 || x==3) {
-//			prestmt.setString(1, y);
-//			prestmt.setInt(2,id);
-//		}
-//		else if(x==2) {
-//			prestmt.setInt(1, age);
-//			prestmt.setInt(2, id);
-//		}
+		prestmt.executeUpdate();
 	}
 	
 	@Override
@@ -261,6 +269,11 @@ public class dataQerry implements IDataQuerry{
 		System.out.println("Enter number of students you want to edit :- ");
 		int val=sc.nextInt();
 		
+		
+		String querry = "UPDATE students SET ? = ? WHERE id = ?;";
+		
+		PreparedStatement prestmt = con.prepareStatement(querry);
+		
 		for(int i=0;i<val;i++) {
 			System.out.println("Enter the ID of student you want to Update :- ");
 			int id=sc.nextInt();
@@ -268,47 +281,62 @@ public class dataQerry implements IDataQuerry{
 			System.out.println("select :-\n1 to change name.\n2 to change age.\n3 to change email.");
 			int x=sc.nextInt();
 			
-			String querry = null;
 			String y;
 			int age =0;
 			
 			if(x==1) {
-				querry="UPDATE students SET name = ? WHERE id = ?;";
+//				querry="UPDATE students SET name = ? WHERE id = ?;";
 				System.out.println("Enter new name :- ");
 				y=sc.nextLine();
 				
-				PreparedStatement prestmt = con.prepareStatement(querry);
+//				PreparedStatement prestmt = con.prepareStatement(querry);
 				
-				prestmt.setString(1, y);
-				prestmt.setInt(2,id);
+				prestmt.setString(1, "name");
+				prestmt.setString(2, y);
+				prestmt.setInt(3,id);
+				
+//				prestmt.addBatch();
+				
+				System.out.println("Student name edited successfully.\n\n");
 			}
 			else if(x==2) {
-				querry="UPDATE students SET age = ? WHERE id = ?;";
+//				querry="UPDATE students SET age = ? WHERE id = ?;";
 				System.out.println("Enter new age :- ");
 				age=sc.nextInt();
 				
-				PreparedStatement prestmt = con.prepareStatement(querry);
+//				PreparedStatement prestmt = con.prepareStatement(querry);
 				
-				prestmt.setInt(1, age);
-				prestmt.setInt(2, id);
+				prestmt.setString(1, "age");
+				prestmt.setInt(2, age);
+				prestmt.setInt(3, id);
+				
+//				prestmt.addBatch();
+				
+				System.out.println("Student age edited successfully.\n\n");
 			}
 			else if(x==3) {
-				querry="UPDATE students SET email = ? WHERE id = ?;";
+//				querry="UPDATE students SET email = ? WHERE id = ?;";
 				System.out.println("Enter new E-Mail :- ");
 				y=sc.nextLine();
 				
-				PreparedStatement prestmt = con.prepareStatement(querry);
+//				PreparedStatement prestmt = con.prepareStatement(querry);
 				
-				prestmt.setString(1, y);
-				prestmt.setInt(2,id);
+				prestmt.setString(1, "email");
+				prestmt.setString(2, y);
+				prestmt.setInt(3,id);
+				
+//				prestmt.addBatch();
+				
+				System.out.println("Student E-Mail edited successfully.\n\n");
 			}
 			else {
 				System.out.println("Invalid Input.");
 			}
-			
+			prestmt.addBatch();
 		}
+		prestmt.executeBatch();
 		
-//		PreparedStatement prestmt=con.prepareStatement(querry);
+		System.out.println("All students edited/updated successfully.\n\n");
 	}
 	
 }

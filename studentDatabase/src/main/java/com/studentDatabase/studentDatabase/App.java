@@ -15,25 +15,28 @@ public class App
         
         while(true) {
         	menu.mainMenu();
+        	System.out.print("Please enter a number :- ");
         	int val=sc.nextInt();
         	switch(val) {
-        	case 1: dq.CreateTable();
+        		case 1: dq.CreateTable();break;
         		
-        	case 2: dq.DisplayData();
+        		case 2: dq.DisplayData();break;
         		
-        	case 3: dq.InsertSingleData();
+        		case 3: dq.InsertSingleData();break;
         		
-        	case 4: dq.InsertMultipleData();
+        		case 4: dq.InsertMultipleData();break;
         		
-        	case 5:
+        		case 5: dq.DeleteSingleData();break;
         		
-        	case 6:
+        		case 6: dq.DeleteMultipleData();break;
         		
-        	case 7:
+        		case 7: dq.UpdateSingleData();break;
         		
-        	case 8:
+        		case 8: dq.UpdateMultipleData();break;
         		
-        	case 9: break;
+        		case 9: break;
+        	
+        		default: System.out.println("Invalid Input.");
         		
         	}
         }
